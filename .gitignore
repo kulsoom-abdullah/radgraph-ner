@@ -1,0 +1,61 @@
+# ------------------
+# Python cache
+# ------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# ------------------
+# Virtual environments
+# ------------------
+venv/
+.venv/
+env/
+.conda/
+.ipynb_checkpoints/
+
+# ------------------
+# Jupyter Notebook checkpoints
+# ------------------
+.ipynb_checkpoints/
+
+# ------------------
+# Data folders
+# ------------------
+data/raw/
+data/processed/
+data/*.csv
+data/*.json
+
+# If you keep small test JSONs, you can remove them from .gitignore
+
+# ------------------
+# Model checkpoints or Hugging Face caches
+# ------------------
+models/
+*.bin
+*.pt
+*.pth
+*.h5
+*.ckpt
+
+# Transformers cache
+huggingface/
+.cache/
+.cache_dir/
+
+# ------------------
+# Logs and experiment tracking
+# ------------------
+logs/
+mlruns/ 
+wandb/
+*.log
+
+# ------------------
+# Misc
+# ------------------
+.DS_Store
+Thumbs.db
