@@ -104,16 +104,15 @@ python scripts/train_test_split.py --input-file data/processed/radgraph.jsonl --
 
 ## Tokenization Insights
 
-A demonstration notebook (`notebooks/tokenization_demo.ipynb`) showcases:
-- Differences between BPE, and WordPiece tokenization.
-- Examples of tokenization applied to medical text.
-
+A demonstration notebook [`notebooks/tokenization_demo.ipynb`](notebooks/tokenization_demo.ipynb) showcases:
+- Differences between BPE, and WordPiece tokenization, vs general and domain tokenizers, illustrating the potential improvement in capturing medical terms within specialized vocabularies.
+- Examples of tokenization applied to medical text in RADGRAPH.  For example, check out how ‘ACHALASIA’ is split across.
 ---
 
 ## Next Steps
 
 1. Fine-tune pretrained models (e.g., Bio_ClinicalBERT, ClinicalBERT) on RadGraph for NER and relation extraction tasks.
-2. Evaluate the impact of tokenization schemes on downstream tasks.
+2. Measure how tokenizer splits affect real NER metrics on the RadGraph dataset.
 3. Consider exploring custom tokenization schemes for rare terms as a future experiment.
 
 ---
