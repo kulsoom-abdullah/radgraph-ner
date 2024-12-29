@@ -2,39 +2,39 @@
 
 This project focuses on developing a Named Entity Recognition (NER) and Relation Extraction pipeline using the RadGraph dataset.
 
+---
+
 ## Setup Instructions
 
 1. Clone the repository and navigate to the project directory:
    ```bash
    git clone https://github.com/your-repo/radgraph-ner.git
    cd radgraph-ner
-```
+   ```
 2. Install the dependencies:
-
-```bash
+   ```bash
 pip install -r requirements.txt
-```
+   ```
 3. Install the radgraph package in development mode:
-
-```bash
+   ```bash
 python setup.py develop
-```
-
+   ```
+---
 ## Data Preprocessing
 Ensure raw JSON files are placed in the data/raw/ directory:
 
-```kotlin
+   ```kotlin
 data/
 ├── raw/
 │   ├── section_findings.json
 │   └── section_impression.json
-```
+   ```
 
 Then run the preprocessing script:
 
-```bash
+   ```bash
 python scripts/preprocess.py
-```
+   ```
 This script loads the raw JSON, creates a Hugging Face `Dataset` object, and saves it to `data/processed/`
 
 ## Dataset: RadGraph-XL
@@ -46,36 +46,64 @@ Using **RadGraph-XL**, a large-scale expert-annotated dataset for entity and rel
 
 This dataset was introduced by Delbrouck et al., 2024 and has been shown to surpass previous approaches by up to 52% in extracting clinical entities and relations from radiology reports.
 
+---
+
 ## Exploratory Data Analysis (EDA)
--See `notebooks/eda.ipynb` for details on entity distribution, report length analysis, and example highlights.
 
-## Key Dataset Insights
-1. **Entity Type Distribution**:
-   - Most common entity types:
-     - `Observation::definitely present`: ~2.4M occurrences.
-     - `Anatomy::definitely present`: ~2.45M occurrences.
-   - Rare entity types include:
-     - `Observation::measurement::definitely absent`: 1 occurrence.
-     - `Observation::measurement::uncertain`: 22 occurrences.
-
-2. **Report Length Distribution**:
-   - Average report length: ~56 tokens (based on whitespace-separated words).
-   - Most reports are between 30–100 tokens, with a few outliers >300 tokens.
-
-3. **Entity Trends by Report Length**:
-   - Longer reports are more likely to include rare entity types like `Observation::measurement::definitely present`.
-
-4. **Highlighted Examples**:
-   - Entities in reports are well-structured, covering a range of observations and anatomical terms.
+- See `notebooks/eda.ipynb` for details on entity distribution, report length analysis, and example highlights.
 
 ---
 
+## Key Dataset Insights
+### **Entity Type Distribution**
+| **Entity Type**                             | **Count**     |
+|---------------------------------------------|---------------|
+| Observation::definitely present             | 2,440,911     |
+| Anatomy::definitely present                 | 2,456,763     |
+| Observation::definitely absent              | 396,044       |
+| Observation::uncertain                      | 265,709       |
+| Observation::measurement::definitely present| 6,393         |
+| Anatomy::measurement::definitely present    | 14,307        |
+| Anatomy::uncertain                          | 1,018         |
+| Anatomy::definitely absent                  | 254           |
+| Observation::measurement::uncertain         | 22            |
+| Observation::measurement::definitely absent | 1             |
 
-### **Suggestions for Next Steps**
-- **Tokenization**: Implement and analyze different tokenization schemes (e.g., BPE, WordPiece).
-- **Training**: Prepare datasets for fine-tuning the NER model.
-- **Testing**: Develop tests to validate preprocessing and tokenization logic.
+- **Handling Rare Classes**:
+  - The rare class `Observation::measurement::definitely absent` (count: 1) was explicitly assigned to the test set to ensure inclusion in model evaluation.
 
+### **Token Counts**
+- **Total Tokens**: 15,815,652
+- **Unique Tokens**: 33,855
+
+---
+
+## Train-Test Split Preparation
+
+This step prepares train/val/test splits from the RadGraph dataset for model training. If stratification isn't feasible (e.g., due to rare entities), it falls back to a random split.
+
+**Command**:
+```bash
+python scripts/train_test_split.py --input-file data/processed/radgraph.jsonl --output-dir data/splits --stratify
+```
+
+**Output**:
+- `train.jsonl`: Training data
+- `val.jsonl`: Validation data
+- `test.jsonl`: Test data
+
+---
+### Tokenization Insights
+A demonstration notebook (`notebooks/tokenization_demo.ipynb`) showcases:
+- Differences between BPE, WordPiece, and SentencePiece tokenization.
+- Examples of tokenization applied to medical text.
+---
+
+## Next Steps
+1. Fine-tune pretrained models (e.g., Bio_ClinicalBERT, ClinicalBERT) on RadGraph for NER and relation extraction tasks.
+2. Evaluate the impact of tokenization schemes on downstream tasks.
+3. Consider exploring custom tokenization schemes for rare terms as a future experiment.
+```
 
 ---
 

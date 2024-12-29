@@ -4,3 +4,5 @@ datasets
 wandb
 mlflow
 scikit-learn
+pandas
+tabulate
