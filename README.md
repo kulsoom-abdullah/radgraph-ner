@@ -11,31 +11,38 @@ This project focuses on developing a Named Entity Recognition (NER) and Relation
    git clone https://github.com/your-repo/radgraph-ner.git
    cd radgraph-ner
    ```
+
 2. Install the dependencies:
    ```bash
-pip install -r requirements.txt
+   pip install -r requirements.txt
    ```
+
 3. Install the radgraph package in development mode:
    ```bash
-python setup.py develop
+   python setup.py develop
    ```
----
-## Data Preprocessing
-Ensure raw JSON files are placed in the data/raw/ directory:
 
-   ```kotlin
+---
+
+## Data Preprocessing
+
+Ensure raw JSON files are placed in the `data/raw/` directory:
+
+```plaintext
 data/
 ├── raw/
 │   ├── section_findings.json
 │   └── section_impression.json
-   ```
+```
 
 Then run the preprocessing script:
-
-   ```bash
+```bash
 python scripts/preprocess.py
-   ```
-This script loads the raw JSON, creates a Hugging Face `Dataset` object, and saves it to `data/processed/`
+```
+
+This script loads the raw JSON, creates a Hugging Face `Dataset` object, and saves it to `data/processed/`.
+
+---
 
 ## Dataset: RadGraph-XL
 
@@ -55,6 +62,7 @@ This dataset was introduced by Delbrouck et al., 2024 and has been shown to surp
 ---
 
 ## Key Dataset Insights
+
 ### **Entity Type Distribution**
 | **Entity Type**                             | **Count**     |
 |---------------------------------------------|---------------|
@@ -93,21 +101,24 @@ python scripts/train_test_split.py --input-file data/processed/radgraph.jsonl --
 - `test.jsonl`: Test data
 
 ---
-### Tokenization Insights
+
+## Tokenization Insights
+
 A demonstration notebook (`notebooks/tokenization_demo.ipynb`) showcases:
-- Differences between BPE, WordPiece, and SentencePiece tokenization.
+- Differences between BPE, and WordPiece tokenization.
 - Examples of tokenization applied to medical text.
+
 ---
 
 ## Next Steps
+
 1. Fine-tune pretrained models (e.g., Bio_ClinicalBERT, ClinicalBERT) on RadGraph for NER and relation extraction tasks.
 2. Evaluate the impact of tokenization schemes on downstream tasks.
 3. Consider exploring custom tokenization schemes for rare terms as a future experiment.
-```
 
 ---
 
-###  **Style & Linting**
+### **Style & Linting**
 
 - **Recommended Tools**:
   - **Black**: Automatically formats your Python code to PEP 8 style.
@@ -115,11 +126,12 @@ A demonstration notebook (`notebooks/tokenization_demo.ipynb`) showcases:
   - **isort**: Sorts imports by sections (standard library, third-party, local).
   - **Pre-commit Hooks**: You can set up a `.pre-commit-config.yaml` to auto-run these on each commit.
 
-**Initial Setup** (minimal approach):
+**Initial Setup**:
 ```bash
 pip install black flake8 isort
 ```
-# Then you can run
+
+Run the tools:
 ```bash
 black .
 isort .
